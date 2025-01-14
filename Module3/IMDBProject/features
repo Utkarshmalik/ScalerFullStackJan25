@@ -1,0 +1,11 @@
+
+The user will be able to view the list of the latest & trneding movies (IMDB API)
+User can create their own separate watchlist
+User can filter movies according to genre
+User can sort movies according to ratings
+Pagination will be implemented to move from one page to another to get updated data of other movies
+Search feature will be there for movies.
+
+
+
+Vite 
