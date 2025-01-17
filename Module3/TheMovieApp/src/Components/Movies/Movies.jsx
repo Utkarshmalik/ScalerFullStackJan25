@@ -1,24 +1,37 @@
-import { useState } from "react";
-
-
-const defaultMovies = [
-    {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 1"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 2"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 3"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 4"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 5"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 6"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 7"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 8"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 9"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 10"},
-     {url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68", title:"Movie 11"},
-
- ];
+import { useState,useEffect } from "react";
+import Pagination from "../Pagination/Pagination";
+import Spinner from "../Commons/Spinner/Spinner";
+import axios from "axios";
 
 function Movies(){
 
-    const [movies, setMovies]= useState(defaultMovies);
+    const [movies, setMovies]= useState(null);
+    const [isLoading, setIsLoading] =  useState(true);
+
+    const fetchMovieData = async ()=>{
+
+        console.log("Inside Movies");
+
+        try{
+         const response = await  axios.get("https://api.themoviedb.org/3/trending/movie/day?api_key=1439d8ee0449071c8283dae52000692e");
+         const movies = response.data.results;
+         console.log(movies);
+         setMovies(movies);
+         setIsLoading(false);
+
+        }
+        catch(err){
+            console.log(err);
+
+        }
+
+    }
+
+    useEffect(()=>{
+        console.log("I am inside useEffect");
+        fetchMovieData();
+    },[]);
+
 
     return <div>
 
@@ -26,25 +39,31 @@ function Movies(){
             <h1> Trending Movies </h1>
         </div>
 
-        <div className="flex flex-wrap gap-8 justify-evenly" >
+        {
+            (isLoading) ? <Spinner/> : <>
+
+            <div className="flex flex-wrap gap-8 justify-evenly" >
             {
                 movies.map((movieObj)=>{
-
                     return <div className="h-[40vh] w-[200px] bg-cover
                      bg-center rounded-lg flex justify-center items-end 
                      hover:scale-110 duration-300"
-                     style={{backgroundImage:`url(${movieObj.url})`}}>
+                     style={{backgroundImage:`url(https://image.tmdb.org/t/p/original${movieObj.backdrop_path})`}}>
 
                         <div className="text-white bg-gray-900 w-full bg-opacity-70 text-xl p-2">
                                {movieObj.title}
                         </div>  
-                        
                         </div>
-
                 })
             }
 
-        </div>
+        </div> 
+        <Pagination/>          
+            </>
+
+        }
+
+       
 
     </div>
 }
