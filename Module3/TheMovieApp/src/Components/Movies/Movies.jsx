@@ -2,18 +2,35 @@ import { useState,useEffect } from "react";
 import Pagination from "../Pagination/Pagination";
 import Spinner from "../Commons/Spinner/Spinner";
 import axios from "axios";
+import MovieCard from "../MovieCard/MovieCard";
 
-function Movies(){
+function Movies({watchlist, addMovieToAWatchList,removeMovieFromAWatchList}){
 
     const [movies, setMovies]= useState(null);
     const [isLoading, setIsLoading] =  useState(true);
+
+    const [pageNumber, setPageNumber] = useState(1);
+
+
+    const onPrevClick = ()=>{
+        if(pageNumber>1){
+            setPageNumber(pageNumber-1);
+        }
+    }
+
+
+    const onNextClick = ()=>{
+        setPageNumber(pageNumber+1);
+    }
+
+
 
     const fetchMovieData = async ()=>{
 
         console.log("Inside Movies");
 
         try{
-         const response = await  axios.get("https://api.themoviedb.org/3/trending/movie/day?api_key=1439d8ee0449071c8283dae52000692e");
+         const response = await  axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=1439d8ee0449071c8283dae52000692e&page=${pageNumber}`);
          const movies = response.data.results;
          console.log(movies);
          setMovies(movies);
@@ -24,13 +41,12 @@ function Movies(){
             console.log(err);
 
         }
-
     }
 
     useEffect(()=>{
         console.log("I am inside useEffect");
         fetchMovieData();
-    },[]);
+    },[pageNumber]);
 
 
     return <div>
@@ -45,20 +61,12 @@ function Movies(){
             <div className="flex flex-wrap gap-8 justify-evenly" >
             {
                 movies.map((movieObj)=>{
-                    return <div className="h-[40vh] w-[200px] bg-cover
-                     bg-center rounded-lg flex justify-center items-end 
-                     hover:scale-110 duration-300"
-                     style={{backgroundImage:`url(https://image.tmdb.org/t/p/original${movieObj.backdrop_path})`}}>
-
-                        <div className="text-white bg-gray-900 w-full bg-opacity-70 text-xl p-2">
-                               {movieObj.title}
-                        </div>  
-                        </div>
+                        return <MovieCard  addMovieToAWatchList={addMovieToAWatchList} removeMovieFromAWatchList={removeMovieFromAWatchList} watchlist={watchlist} movieObj={movieObj} />
                 })
             }
 
         </div> 
-        <Pagination/>          
+        <Pagination pageNumber={pageNumber} onNextClick={onNextClick} onPrevClick={onPrevClick} />          
             </>
 
         }

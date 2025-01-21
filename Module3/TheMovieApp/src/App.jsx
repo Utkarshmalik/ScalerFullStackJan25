@@ -7,6 +7,21 @@ import Navbar from './Components/Navbar/Navbar';
 
 function App() {
 
+  const [watchlist, setWatchList] = useState([]);
+
+
+  const addMovieToAWatchList=(movie)=>{
+    setWatchList([...watchlist,movie]);
+  }
+
+
+  const removeMovieFromAWatchList=(movie)=>{
+
+    const updatedWatchList = watchlist.filter((watchlistMovie)=>watchlistMovie.id!=movie.id);
+    setWatchList(updatedWatchList);
+  
+  }
+
   return (
     <>
 
@@ -15,8 +30,8 @@ function App() {
     <Navbar/>
 
     <Routes>
-      <Route path='/' element={<Home/>}  />
-      <Route path='/watchlist' element={<WatchList/>}  />
+      <Route path='/' element={<Home addMovieToAWatchList={addMovieToAWatchList} removeMovieFromAWatchList={removeMovieFromAWatchList} watchlist={watchlist}/>}  />
+      <Route path='/watchlist' element={<WatchList removeMovieFromAWatchList={removeMovieFromAWatchList} watchlist={watchlist}/>}  />
 
     </Routes>
 
