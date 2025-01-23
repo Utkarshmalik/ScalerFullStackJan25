@@ -1,15 +1,20 @@
+import { useContext } from "react";
 import Banner from "../../Components/Banner/Banner";
 import Movies from "../../Components/Movies/Movies";
+import { ThemeContext } from "../../App";
 
 
 
-function Home({watchlist, addMovieToAWatchList,removeMovieFromAWatchList}){
+function Home(){
+
+     const {theme} = useContext(ThemeContext);
+    const backgroundColorClass = (theme==="light") ? "bg-white text-black":"bg-black text-white"
 
 
-    return <div>
+    return <div className={`${backgroundColorClass}`}>
 
         <Banner/>
-        <Movies addMovieToAWatchList={addMovieToAWatchList} removeMovieFromAWatchList={removeMovieFromAWatchList} watchlist={watchlist} />
+        <Movies  />
         
     </div>
 

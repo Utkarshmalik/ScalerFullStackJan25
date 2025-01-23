@@ -4,13 +4,13 @@ import Spinner from "../Commons/Spinner/Spinner";
 import axios from "axios";
 import MovieCard from "../MovieCard/MovieCard";
 
-function Movies({watchlist, addMovieToAWatchList,removeMovieFromAWatchList}){
+function Movies(){
 
     const [movies, setMovies]= useState(null);
     const [isLoading, setIsLoading] =  useState(true);
 
     const [pageNumber, setPageNumber] = useState(1);
-
+    
 
     const onPrevClick = ()=>{
         if(pageNumber>1){
@@ -61,7 +61,7 @@ function Movies({watchlist, addMovieToAWatchList,removeMovieFromAWatchList}){
             <div className="flex flex-wrap gap-8 justify-evenly" >
             {
                 movies.map((movieObj)=>{
-                        return <MovieCard  addMovieToAWatchList={addMovieToAWatchList} removeMovieFromAWatchList={removeMovieFromAWatchList} watchlist={watchlist} movieObj={movieObj} />
+                        return <MovieCard movieObj={movieObj} />
                 })
             }
 

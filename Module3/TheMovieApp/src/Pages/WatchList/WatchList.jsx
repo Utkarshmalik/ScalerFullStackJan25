@@ -1,6 +1,14 @@
+import { useContext, useState } from "react";
 import genreIdMappings from "../../Configurations/genreConfigs";
+import { WatchListContext } from "../../App";
 
-function WatchList({watchlist, removeMovieFromAWatchList}){
+function WatchList(){
+
+    const watchListContextValue = useContext(WatchListContext);
+
+    const {watchlist, removeMovieFromAWatchList} = watchListContextValue;
+
+    const [watchListMoviesInDisplay, setWatchListMoviesInDisplay]= useState(watchlist);
 
 
     const genres = new Set();
@@ -13,6 +21,49 @@ function WatchList({watchlist, removeMovieFromAWatchList}){
     genreArray.unshift("All Genres");
 
     console.log(genreArray);
+
+
+    const onSearch = (e)=>{
+        const searchValue = e.target.value.toLowerCase();
+
+        const filteredMovies = watchlist.filter((movie)=>{
+            return movie.title.toLowerCase().startsWith(searchValue)
+        });
+
+        console.log(searchValue, filteredMovies);
+
+        
+        setWatchListMoviesInDisplay(filteredMovies);
+    }
+
+
+    const sortByRatings = ()=>{
+
+        const watchListMoviesSortedByRatings = [...watchListMoviesInDisplay];
+
+        
+        watchListMoviesSortedByRatings.sort((a,b)=>{
+            return a.vote_average - b.vote_average
+        })
+
+        setWatchListMoviesInDisplay(watchListMoviesSortedByRatings);
+
+    }
+
+    const filterByGenre = (genre)=>{
+
+        if(genre==='All Genres'){
+            setWatchListMoviesInDisplay(watchlist);
+            return;
+        }
+
+        const filteredMovies = watchlist.filter((movie)=>{
+            return  genreIdMappings[movie.genre_ids[0]]===genre;
+        })
+
+        setWatchListMoviesInDisplay(filteredMovies);
+
+    }
    
 
 
@@ -24,7 +75,7 @@ function WatchList({watchlist, removeMovieFromAWatchList}){
 
             {
                 genreArray.map((genre)=>{
-                    return <div className="bg-blue-400 h-[3rem] w-[9rem] mx-4 flex justify-center items-center text-white font-bolder rounded-xl text-lg"> {genre} </div>
+                    return <div onClick={()=>filterByGenre(genre)} className="cursor-pointer bg-blue-400 h-[3rem] w-[9rem] mx-4 flex justify-center items-center text-white font-bolder rounded-xl text-lg"> {genre} </div>
                 })
             }
 
@@ -32,7 +83,7 @@ function WatchList({watchlist, removeMovieFromAWatchList}){
 
 
         <div>
-            <input className="h-[3rem] w-[20rem] px-4 border font-lg" type="text" placeholder="Search Movie" />
+            <input onChange={onSearch} className="h-[3rem] w-[20rem] px-4 border font-lg" type="text" placeholder="Search Movie" />
         </div>
 
         
@@ -46,7 +97,7 @@ function WatchList({watchlist, removeMovieFromAWatchList}){
 
                    <tr className="border">
                         <th> Name </th>
-                        <th> Rating </th>
+                        <th className="underline cursor-pointer" onClick={sortByRatings} > Rating </th>
                         <th> Popularity </th>
                         <th> Genre </th>
 
@@ -58,7 +109,7 @@ function WatchList({watchlist, removeMovieFromAWatchList}){
                 <tbody>
 
                     {
-                        watchlist.map((movie)=>{
+                        watchListMoviesInDisplay.map((movie)=>{
 
                             return <tr className="border">
 

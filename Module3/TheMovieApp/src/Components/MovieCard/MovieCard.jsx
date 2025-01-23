@@ -1,6 +1,14 @@
+import { useContext } from "react";
+import { WatchListContext } from "../../App";
 
 
-function MovieCard({movieObj, watchlist, addMovieToAWatchList, removeMovieFromAWatchList}){
+function MovieCard({movieObj}){
+
+       const watchListContextValue = useContext(WatchListContext);
+       const {watchlist, addMovieToAWatchList, removeMovieFromAWatchList} = watchListContextValue;
+
+       console.log(watchlist);
+
 
        //wants to know a list of movies in the watchlist 
 
