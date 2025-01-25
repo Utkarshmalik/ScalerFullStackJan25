@@ -1,0 +1,102 @@
+Terminologies 
+
+
+Store :  The store is the central place where all the state of your application lives. It acts as a single source of truth, meaning all the data your app needs to function is stored here.
+
+    - There is only one store for the entire application.
+
+    It provides methods to:
+       Get the current state of the app (store.getState()).
+       Dispatch actions to update the state (store.dispatch(action)).
+       Subscribe to changes in the state (store.subscribe(listener)).
+
+
+TodoList state in a redux store 
+
+
+Actions:
+
+An action is a plain JavaScript object that describes what happened in your application. Actions are used to tell the store what kind of update is needed for the state.
+
+- Every action must have a type property, which is a string describing the action.
+
+- It can optionally have a payload property that contains extra data needed to update the state.
+
+const addTodoAction = {
+  type: 'ADD_TODO',
+  payload: 'Learn Redux',
+};
+
+
+On Trigger 
+
+Dispatching an Action: You use the dispatch function to send an action to the store:
+
+store.dispatch({ type: 'ADD_TODO', payload: 'Learn Redux' });
+
+store.dispatch({ type: 'INCREMENT_COUNTER'});
+
+
+Reducers:
+
+A reducer is a pure function that takes the current state and an action as input and returns a new state.
+
+Key Points: 
+    Reducers specify how the state should change in response to an action.
+
+
+
+function countReducer(state, action){
+        switch (action.type) {
+        case 'INCREMENT':
+        return { ...state, value: state.value + 1 };
+        case 'DECREMENT':
+        return { ...state, value: state.value - 1 };
+        default:
+        return state;
+    }
+
+}
+
+
+Selectors:
+
+A selector is a function that extracts a specific piece of state from the store. 
+
+const selectCounterValue = (state) => state.counter.value;
+
+
+
+Store holds the state of your app.
+Actions describe what you want to do (e.g., "Increment the counter").
+Dispatch sends the action to the store.
+Reducers decide how the state should change based on the action.
+
+
+Counter Flow
+
+
+User clicks an "Increment" button in the UI.
+The button calls dispatch({ type: 'INCREMENT' }).
+The reducer processes the INCREMENT action and updates the state.
+The new state is saved in the store.
+Components subscribed to the state using useSelector re-render with the updated value.
+
+
+
+ Vanilla Redux:
+
+It is boilerplate-heavy, especially for beginners. You have to write a lot of repetitive code:
+
+Setting up actions, reducers, and action creators.
+Managing middleware like redux-thunk for async actions.
+Handling immutable state updates can be tricky.
+
+
+
+
+
+What is Redux Toolkit?
+
+Redux Toolkit is the official, modern way to use Redux. It simplifies the setup and reduces boilerplate, making Redux easier to learn and use.
+
