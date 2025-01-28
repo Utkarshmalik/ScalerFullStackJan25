@@ -6,6 +6,7 @@ import WatchList from './Pages/WatchList/WatchList';
 import Navbar from './Components/Navbar/Navbar';
 import Counter from './Pages/Counter/counter';
 import TodoList from './Pages/TodoList/TodoList';
+import User from './Pages/User/User';
 
 
 export const WatchListContext = createContext();
@@ -67,6 +68,7 @@ function App() {
       <Route path='/watchlist' element={<WatchList />}  />
       <Route path='/counter' element={<Counter />}  />
       <Route path='/todo' element={<TodoList />}  />
+      <Route path='/user' element={<User />}  />
 
 
     </Routes>
