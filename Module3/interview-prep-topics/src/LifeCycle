@@ -1,0 +1,8 @@
+Constructor: Initializes the state with an empty to-do list and empty new to-do item.
+
+Render: Renders the initial UI, which shows a heading, an empty list, an input box, and a button.
+
+Component Did Mount: Fetches initial to-do items after the component is mounted. After 2 second, it updates the state with the fetched to-dos.
+
+Render: Runs again due to the state change and updates the UI with the fetched to-dos.
+

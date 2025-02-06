@@ -1,0 +1,1 @@
+// Custom hooks in React are JavaScript functions that allow you to extract and reuse stateful logic from components. They follow a specific naming convention: their names should start with use (e.g., useCustomHook). Custom hooks are useful for abstracting complex logic into reusable functions, improving code organization and reusability.

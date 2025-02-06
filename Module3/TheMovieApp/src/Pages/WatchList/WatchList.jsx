@@ -1,76 +1,12 @@
-import { useContext, useState } from "react";
-import genreIdMappings from "../../Configurations/genreConfigs";
-import { WatchListContext } from "../../App";
+import { useWatchListHook } from "../../hooks/useWatchListHook";
+
 
 function WatchList(){
 
-    const watchListContextValue = useContext(WatchListContext);
-
-    const {watchlist, removeMovieFromAWatchList} = watchListContextValue;
-
-    const [watchListMoviesInDisplay, setWatchListMoviesInDisplay]= useState(watchlist);
-
-
-    const genres = new Set();
-
-    watchlist.forEach((movie)=>{
-        genres.add(genreIdMappings[movie.genre_ids[0]]);
-    })
-
-    const genreArray = Array.from(genres);
-    genreArray.unshift("All Genres");
-
-    console.log(genreArray);
-
-
-    const onSearch = (e)=>{
-        const searchValue = e.target.value.toLowerCase();
-
-        const filteredMovies = watchlist.filter((movie)=>{
-            return movie.title.toLowerCase().startsWith(searchValue)
-        });
-
-        console.log(searchValue, filteredMovies);
-
-        
-        setWatchListMoviesInDisplay(filteredMovies);
-    }
-
-
-    const sortByRatings = ()=>{
-
-        const watchListMoviesSortedByRatings = [...watchListMoviesInDisplay];
-
-        
-        watchListMoviesSortedByRatings.sort((a,b)=>{
-            return a.vote_average - b.vote_average
-        })
-
-        setWatchListMoviesInDisplay(watchListMoviesSortedByRatings);
-
-    }
-
-    const filterByGenre = (genre)=>{
-
-        if(genre==='All Genres'){
-            setWatchListMoviesInDisplay(watchlist);
-            return;
-        }
-
-        const filteredMovies = watchlist.filter((movie)=>{
-            return  genreIdMappings[movie.genre_ids[0]]===genre;
-        })
-
-        setWatchListMoviesInDisplay(filteredMovies);
-
-    }
-   
-
-
+    const {genreArray, onSearch,sortByRatings,watchListMoviesInDisplay} = useWatchListHook();
 
 
     return <div>
-
         <div className="flex justify-center items-center m-5" >
 
             {
@@ -78,14 +14,11 @@ function WatchList(){
                     return <div onClick={()=>filterByGenre(genre)} className="cursor-pointer bg-blue-400 h-[3rem] w-[9rem] mx-4 flex justify-center items-center text-white font-bolder rounded-xl text-lg"> {genre} </div>
                 })
             }
-
         </div>
-
 
         <div>
             <input onChange={onSearch} className="h-[3rem] w-[20rem] px-4 border font-lg" type="text" placeholder="Search Movie" />
         </div>
-
         
 
         <div>
@@ -164,5 +97,8 @@ function WatchList(){
     </div>
 
 }
+
+
+
 
 export default WatchList;
