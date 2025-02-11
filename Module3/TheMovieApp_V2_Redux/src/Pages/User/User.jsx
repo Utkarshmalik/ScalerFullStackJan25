@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../store/UserSlice";
+import UnAuthenticated from "../UnAuthenticated";
 
 function User(){
 

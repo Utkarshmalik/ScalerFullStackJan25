@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Counter from './Pages/Counter/counter';
 import TodoList from './Pages/TodoList/TodoList';
 import User from './Pages/User/User';
+import AuthHoc from './hoc/AuthHoc';
 
 
 export const WatchListContext = createContext();
@@ -64,11 +65,36 @@ function App() {
     <Navbar/>
     <WatchListContext.Provider value={{watchlist:watchlist,addMovieToAWatchList:addMovieToAWatchList,removeMovieFromAWatchList:removeMovieFromAWatchList}}>
     <Routes>
-      <Route path='/' element={<Home />}  />
-      <Route path='/watchlist' element={<WatchList />}  />
-      <Route path='/counter' element={<Counter />}  />
-      <Route path='/todo' element={<TodoList />}  />
-      <Route path='/user' element={<User />}  />
+      <Route path='/' element={  
+        <Home />
+
+    }  />
+      <Route path='/watchlist' element={
+       <AuthHoc>
+        <WatchList />
+       </AuthHoc>
+    }  />
+      <Route path='/counter' element={
+        
+        <AuthHoc>
+        <Counter />
+        </AuthHoc>
+        
+        }  />
+      <Route path='/todo' element={
+      
+        <AuthHoc>
+        <TodoList />
+        </AuthHoc>
+        
+        }  />
+      <Route path='/user' element={
+
+        <AuthHoc>
+        <User />
+        </AuthHoc>
+        
+        }  />
 
 
     </Routes>

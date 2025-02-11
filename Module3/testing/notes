@@ -1,0 +1,96 @@
+
+1. Unit Testing
+Definition: Tests individual components or functions of the code in isolation.
+Purpose: Ensures that a specific module or function works as expected.
+Tools: Jest, JUnit, PyTest, NUnit, Mocha.
+Example: Testing a function that calculates the sum of two numbers.
+
+
+function add(a,b){
+    return a+b;
+}
+
+add(4,5) => 9
+add(7,8)=> 15
+
+Purpose: Unit testing focuses on testing individual components or functions of the software in isolation. The goal is to validate that each unit works as intended and that it performs the task it's designed for correctly.
+Scope: It isolates a single function, method, or class to ensure that it behaves as expected under different conditions.
+
+
+
+
+2. Integration Testing
+Definition: Tests the interaction between multiple units or modules.
+Purpose: Ensures that different components work together correctly.
+Types:
+Top-down: Tests high-level modules first, followed by lower ones.
+Bottom-up: Tests low-level modules first, then integrates them.
+Big Bang: All components are tested together.
+Incremental: Tests modules in small groups.
+Tools: Postman (for API testing), Selenium, TestNG.
+Example: Testing whether a user authentication module correctly integrates with the database.
+
+
+3. Regression Testing
+Definition: Re-runs previously passed tests to ensure new changes don’t break existing functionality.
+Purpose: Detects bugs introduced by code changes.
+Types:
+Selective Regression: Runs only a subset of tests.
+Complete Regression: Runs all test cases.
+Tools: Selenium, TestNG, Jest.
+Example: Verifying that a bug fix in the login system didn’t break password reset functionality.
+
+
+Performance Testing
+Definition: Evaluates the application’s speed, scalability, and stability.
+Purpose: Ensures the system performs well under expected workloads.
+Types:
+Load Testing: Simulates real-world traffic to test system performance.
+Stress Testing: Pushes the system beyond limits to see how it behaves under extreme conditions.
+Scalability Testing: Determines how the application scales with increased users.
+Spike Testing: Tests system behavior under sudden load spikes.
+Tools: JMeter, Gatling, Locust, k6.
+Example: Checking if a web application can handle 10,000 users simultaneously.
+
+
+
+
+
+
+
+//Unit tests
+
+TDD
+Test-Driven Development (TDD) is a software development process where developers write automated test cases before writing the actual code to pass those tests. 
+
+test('should calculate area of rectangle correctly', () => {
+  expect(calculateRectangleArea(3, 4)).toBe(12);
+});
+
+test('should calculate area of rectangle correctly', () => {
+  expect(calculateRectangleArea(5, 10)).toBe(50);
+});
+
+test('should calculate area of rectangle correctly', () => {
+  expect(calculateRectangleArea(5, 50)).toBe(250);
+});
+
+
+function calculateRectangleArea(length, width) {
+  return length * width;
+}
+
+
+
+add(1,5):6
+add(6,7):13
+
+
+function add(a,b){
+    return a+b;
+}
+
+Installation 
+
+
+npm install @testing-library/react @testing-library/jest-dom @testing-library/user-event  jest
