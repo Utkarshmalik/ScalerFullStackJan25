@@ -1,0 +1,105 @@
+MongoDB 
+
+SQL : Tables and Rows
+
+MongoDB : Collections and Documents 
+
+1. BSON (Binary JSON):
+MongoDB stores data in BSON format. Think of BSON as a way to represent data in a binary-encoded form, much like how JSON represents data in a text-based format. It's used by MongoDB to efficiently store and retrieve data.
+
+
+2.Collections
+Collections are like containers or folders in which MongoDB stores related documents.
+
+3. Documents:
+Documents are the basic unit of data in MongoDB. They're similar to rows or records in a table, but unlike SQL databases where each row follows a fixed schema, MongoDB documents can have varying structures within the same collection.
+
+
+
+
+
+Ecommerce
+
+Collection : products
+
+Each document represents a specific product and can have different fields based on the product type.
+
+{
+"_id": ObjectId("61e65529b6fc4670e05a1c7a"),
+"name": "Smartphone",
+"brand": "XYZ",
+"price": 699,
+"specs": {
+"display": "6.5 inches",
+"storage": "128GB",
+"camera": "Quad-camera setup"
+}
+}
+
+{
+"_id": ObjectId("61e65545b6fc4670e05a1c7b"),
+"name": "Laptop",
+"brand": "ABC",
+"price": 1299,
+"specs": {
+"display": "15.6 inches",
+"storage": "512GB SSD",
+"RAM": "16GB",
+"processor": "Intel Core i7"
+}
+}
+
+
+Mongoose
+
+ORMs/ODMs 
+
+
+Nodejs -> RelationalDB 
+
+JS         SQL 
+
+const query = "Select * from products where product.product_id = 1";
+
+const result = DBClient.fire(query);
+
+
+
+Server -> ORM/ODM -> Dabase
+
+
+ NodeJS (using  JS) -> Sequalise (NodejS -> Relational) , Transfrom JS to SQL  -> RelationalDB 
+
+
+  Object-Relational Mappers (ORMs) and Object-Document Mappers (ODMs) are tools that facilitate interaction between an application and a database by abstracting raw SQL or database queries into a more developer-friendly syntax.
+
+
+ ORM (Object-Relational Mapper)
+For Relational Databases: ORMs are used with SQL-based relational databases like MySQL, PostgreSQL, SQLite, Oracle, etc.
+
+ODM (Object-Document Mapper)
+
+For NoSQL Databases: ODMs are used with document-based NoSQL databases like MongoDB.
+
+
+
+
+Nodejs -> MongoDB 
+
+
+NodeJS    Mognoose(ODM)  MongoDB 
+
+
+
+
+MongoDB atlas 
+
+
+
+
+What is ObjectId?
+
+ObjectId is a 12-byte identifier that MongoDB uses as the default primary key for documents.
+
+It is unique across collections and even across different MongoDB instances.
+When you define a schema in Mongoose, the _id field is automatically assigned an ObjectId.
