@@ -103,3 +103,95 @@ ObjectId is a 12-byte identifier that MongoDB uses as the default primary key fo
 
 It is unique across collections and even across different MongoDB instances.
 When you define a schema in Mongoose, the _id field is automatically assigned an ObjectId.
+
+
+
+
+
+MVC Architecture
+
+
+Customer (View) -> Waiter (Controller) 
+
+Waiter -> chef (model) 
+
+fetches the item from the kitchen (database) to make the pizza
+
+Once the pizza is ready: chef serves the pizza back to the waither who then serves it to the customer
+
+
+Model 
+ 
+ - Represents the data (schmeas/collection) of the application.
+ - Manages the fetch the data 
+
+
+View 
+
+ - Represents the user interface or what the user interacts with.
+
+
+Controller 
+
+= Acts as an intermediary between the model and the view.
+
+
+
+
+
+1 Application can have multiple Routes
+
+
+Each Routes will have its own controller  (1:1)
+
+
+Each Controller can interact to multiple Models (DBs) 
+1 Model (DB) can be used by multiple controlers              (m:n)
+
+
+
+
+Benifits of MVC Architecture 
+
+
+Separation of Concerns
+
+Modular Development
+
+Improved Code Reusability
+
+Enhanced Maintainability
+
+Scalability
+
+Efficient Testing and Debugging
+
+
+
+
+
+Pre and Post Hooks
+
+Pre and Post Hooks in Node.js are typically associated with Mongoose, a popular ODM (Object Data Modeling) library for MongoDB in Node.js. They allow you to execute custom logic before and after certain actions on your Mongoose models, such as saving, updating, deleting, and validating documents.
+
+
+Pre-Hooks: Validate data, hash passwords, set timestamps, modify input, or trigger side effects before the main operation.
+
+
+Common Pre-Hooks
+pre('save'): Before saving a document.
+pre('remove'): Before removing a document.
+pre('updateOne'): Before updating a document.
+pre('validate'): Before document validation.
+pre('find'): Before executing a find query.
+
+
+
+Post-Hooks: Clean up resources, send notifications, log activities, or modify output after the main operation.
+
+
+Common Post-Hooks
+post('save'): After saving a document.
+post('remove'): After removing a document.
+post('updateOne'): After updating a document.
+post('find'): After executing a find query.
