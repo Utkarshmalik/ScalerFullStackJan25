@@ -1,4 +1,5 @@
 const UserModel = require("../Model/user.model");
+var jwt = require('jsonwebtoken');
 
 
 
@@ -56,9 +57,14 @@ const onLogin = async (req,res)=>{
             .send({success:false, message:`Sorry! Invalid Password entered!`});
         }
 
+        //generate a new JWT and send it back to a client 
+        const token = jwt.sign({userId:existingUser._id},"iamasecretkey");
+
+
         return res.send({
             success:true,
-            message:"You have successfully logged in"
+            message:"You have successfully logged in",
+            accessToken:token
         })
 
 
@@ -70,7 +76,27 @@ const onLogin = async (req,res)=>{
 
 }
 
+
+const getAllUsers = async (req,res)=>{
+    try{
+
+        const allUsers = await UserModel.find();
+
+        return res.send({
+            success:true,
+            data:allUsers
+        })
+
+    }catch(err){
+        return res.status(500).send({message:"Internal Server Error"})
+    }
+
+}
+
+
+
 module.exports={
     onRegister,
-    onLogin
+    onLogin,
+    getAllUsers
 }

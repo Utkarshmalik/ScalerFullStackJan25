@@ -1,7 +1,34 @@
-import { Button, Checkbox, Form, Input } from 'antd';
-import {Link} from "react-router-dom";
+import { Button, Checkbox, Form, Input, message} from 'antd';
+import {Link, useNavigate} from "react-router-dom";
+import { RegisterUser } from '../../api/auth';
 
 const Register = () => {
+
+    const navigate = useNavigate();
+
+    const onRegister = async (values)=>{
+
+        const {name,email,password} = values;
+
+        const input={
+            name,
+            email,
+            password
+        }
+
+        const response = await RegisterUser(input);
+
+        console.log(response);
+
+        if(response.success){
+            message.success(response.message);
+        }else{
+            message.error(response.data.message);
+        }
+
+    }
+
+
   return <>    
   <header className='App-header'>
       <main className='border main-area mw-500 text-center px-3' >
@@ -12,9 +39,10 @@ const Register = () => {
 
           <section>
 
-                      <Form
+            <Form
                       layout='vertical'
               name="basic"
+              onFinish={onRegister}
              
           >
               <Form.Item

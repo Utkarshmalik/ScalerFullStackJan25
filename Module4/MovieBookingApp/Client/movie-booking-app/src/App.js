@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route}  from "react-router-dom";
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import '@ant-design/v5-patch-for-react-19';
 
 function App() {
   return (

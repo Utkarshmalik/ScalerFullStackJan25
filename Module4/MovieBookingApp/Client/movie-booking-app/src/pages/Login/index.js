@@ -1,7 +1,37 @@
-import { Button, Checkbox, Form, Input } from 'antd';
-import {Link} from "react-router-dom";
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import {Link, useNavigate} from "react-router-dom";
+import { LoginUser } from '../../api/auth';
 
 const Login = () => {
+
+    const navigate = useNavigate();
+
+    const onLogin = async (values)=>{
+
+        const {email, password}= values;
+
+        const input={
+            email,
+            password
+        };
+
+
+         const response = await LoginUser(input);
+
+         if(response.success){
+            message.success("Login Success");
+
+            const accessToken = response.accessToken;
+            localStorage.setItem("token",accessToken);
+            
+
+            navigate("/");
+         }else{
+            message.error(response.message);
+         }
+
+    }
+
     return <>    
     <header className='App-header'>
         <main className='border main-area mw-500 text-center px-3' >
@@ -14,7 +44,8 @@ const Login = () => {
 
                         <Form
                         layout='vertical'
-                name="basic"
+                      name="basic"
+                      onFinish={onLogin}
                
             >
                 <Form.Item
