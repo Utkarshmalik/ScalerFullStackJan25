@@ -58,7 +58,7 @@ const onLogin = async (req,res)=>{
         }
 
         //generate a new JWT and send it back to a client 
-        const token = jwt.sign({userId:existingUser._id},"iamasecretkey");
+        const token = jwt.sign({userId:existingUser._id},process.env.SECRET_KEY);
 
 
         return res.send({
@@ -79,7 +79,6 @@ const onLogin = async (req,res)=>{
 
 const getAllUsers = async (req,res)=>{
     try{
-
         const allUsers = await UserModel.find();
 
         return res.send({
@@ -90,6 +89,36 @@ const getAllUsers = async (req,res)=>{
     }catch(err){
         return res.status(500).send({message:"Internal Server Error"})
     }
+}
+
+const getCurrentUser = async (req,res)=>{
+
+    const token = req.headers['access-token'];
+
+    if(!token){
+        return res.status(400).send({message:"JWT token is not passed"});
+    }
+
+    jwt.verify(token,process.env.SECRET_KEY,async (err,payload)=>{
+
+        if(err){
+            return res.status(403).send({message:"You are not allowed to access! Invalid Token"});
+        }
+        
+
+        const userId = payload.userId;
+
+
+        const userResponse = await UserModel.findById(userId);
+
+        const {_id, name, email, role} = userResponse;
+
+        return res.send({
+            _id,name,email,role
+        });
+
+    })
+
 
 }
 
@@ -98,5 +127,6 @@ const getAllUsers = async (req,res)=>{
 module.exports={
     onRegister,
     onLogin,
-    getAllUsers
+    getAllUsers,
+    getCurrentUser
 }

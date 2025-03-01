@@ -3,18 +3,23 @@ const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./src/db/dbServer");
 const userRoutes = require("./src/Routes/user.routes");
+const movieRoutes = require("./src/Routes/movie.routes");
+var cors = require('cors');
 const bodyParser = require("body-parser");
- var cors = require('cors')
+require('dotenv').config()
+
 
  const app = express();
+
 connectDB();
+
 
 
 app.use(bodyParser.json());
 app.use(cors());
 
-
 userRoutes(app);
+movieRoutes(app);
 
 app.listen(8000,()=>{
     console.log("Serving is running on port 8000");
