@@ -1,11 +1,13 @@
-const { getAllMovies, getMovieDetails, createMovie, createBooking } = require("../Controllers/movie.controllers");
+const { getAllMovies, getMovieDetails, createMovie, createBooking, deleteMovieById, updateMovieById } = require("../Controllers/movie.controllers");
 const { verifyJWT, verifyAdmin } = require("../Middlewares/auth.middleware");
+const verifyCreateMovieRequest = require("../Middlewares/movie.middleware");
 
 
 module.exports = (app)=>{
-    app.get("/movies",getAllMovies);               //all the users 
-    app.get("/movies/:id",getMovieDetails);        //all the users 
-    app.post("/booking",[verifyJWT],createBooking);            //all authenticated users 
-    app.post("/movies",[verifyJWT,verifyAdmin],createMovie);               // authenticated + authorised as admin  
+    app.post("/movies",[verifyJWT,verifyAdmin,verifyCreateMovieRequest],createMovie);              
+    app.get("/movies",getAllMovies);                
+    app.get("/movies/:id",getMovieDetails);  
+    app.delete("/movies/:id",[verifyJWT, verifyAdmin],deleteMovieById);      
+    app.put("/movies/:id",[verifyJWT, verifyAdmin],updateMovieById);      
 
 }
