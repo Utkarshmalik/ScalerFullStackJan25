@@ -44,9 +44,22 @@ const verifyAdmin = (req,res,next)=>{
         next();
 }
 
+const verifyAdminOrPartner = (req,res,next)=>{
+
+    const role = req.userDetails.role;
+
+    if(role!="admin" && role !="partner"){
+        return res.status(403).send({success:false,message:`User with id:${req.userDetails._id} is unauthorised to access this route`});
+    }
+
+    next();
+}
+
+
 module.exports = {
     verifyJWT,
-    verifyAdmin
+    verifyAdmin,
+    verifyAdminOrPartner
 }
 
 

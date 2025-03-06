@@ -19,3 +19,23 @@ export const GetAllMovies = async ()=>{
     }
 
 }
+
+
+export const GetMovieData = async (movieId)=>{
+
+    console.log(`Make an API call to fetch movie details for movieId ${movieId} `);
+
+    try{
+        
+        const response = await axiosInstance.get(`http://localhost:8000/movies/${movieId}`);
+
+        console.log(response);
+
+        return response.data;
+
+    }catch(err){
+        console.log("error",err);
+        return err.response;
+    }
+
+}
