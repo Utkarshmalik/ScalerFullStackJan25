@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { GetMovieData } from "../../api/movies";
 import Navbar from "../../components/Navbar";
-import { Flex, Input } from "antd";
+import { Col, Flex, Input, Row } from "antd";
 import moment from "moment";
+import { GetShowsForAMovie } from "../../api/shows";
 
 function MovieDetail(){
 
@@ -12,10 +13,15 @@ function MovieDetail(){
     const {movieId} = useParams();
     const [date, setDate] = useState(searchParams.get('date'));
     const navigate = useNavigate();
+    const [shows, setShows] = useState(null);
     
     useEffect(()=>{
         fetchMovieDetails();
     },[])
+
+    useEffect(()=>{
+        fetchShowDetails();
+    },[date])
 
     const handleDateChange = (e)=>{
 
@@ -32,6 +38,15 @@ function MovieDetail(){
             setMovie(response.data);
         }
 
+    }
+
+
+    const fetchShowDetails = async ()=>{
+        console.log("fetchiing shows");
+        const showsData = await GetShowsForAMovie(movieId,date);
+        if(showsData.success){
+            setShows(showsData.data);
+        }
     }
 
 
@@ -74,6 +89,87 @@ function MovieDetail(){
             )
 
 
+        }
+
+        {
+
+            shows && (Object.keys(shows)).length===0 && (
+                <div className="ms-3 pt-3">
+                    <h2 className="blue-clr"> 
+                    Currently, No Theatres available for this movie!
+                    </h2>
+                </div>
+            )
+
+        }
+
+        {
+
+            shows && Object.keys(shows).length>0 && (
+
+                <div>
+
+
+                    <div className="ms-3">
+
+                        <h2> Theatres </h2>
+
+                        {
+
+                            Object.keys(shows).map((theatreId)=>{
+
+                                const allShowsForThisTheatre = shows[theatreId];
+                                const theatreDetails = allShowsForThisTheatre[0].theatre;
+
+
+                                return <div>
+
+                                    <Row gutter={24} >
+
+                                        <Col lg={{span:8}} >
+
+                                        <h3> {theatreDetails.name} </h3>
+                                        <p> {theatreDetails.address} </p>
+                                        
+                                        </Col>
+
+                                        <Col lg={{span:16}}>
+
+                                        <ul className="show-ul">
+
+                                            {
+
+                                                allShowsForThisTheatre.map((show)=>{
+                                                    return <li> {show.showTime}  </li>
+                                                })
+                                               
+                                            }
+
+                                        </ul>
+                                          
+
+                                        
+                                        </Col>
+
+                                    </Row>
+
+                                    </div>
+
+                             
+
+
+                            })
+
+                        }
+
+
+                     </div>
+
+
+
+                </div>    
+
+            )
         }
 
 
