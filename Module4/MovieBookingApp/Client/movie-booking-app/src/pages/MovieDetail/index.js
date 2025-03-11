@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { GetMovieData } from "../../api/movies";
 import Navbar from "../../components/Navbar";
 import { Col, Flex, Input, Row } from "antd";
@@ -140,7 +140,7 @@ function MovieDetail(){
                                             {
 
                                                 allShowsForThisTheatre.map((show)=>{
-                                                    return <li> {show.showTime}  </li>
+                                                    return  <Link to={`/book-show/${show._id}`}  >  <li> {show.showTime}  </li></Link>
                                                 })
                                                
                                             }

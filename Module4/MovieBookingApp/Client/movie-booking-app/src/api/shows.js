@@ -21,3 +21,22 @@ export const GetShowsForAMovie = async (movieId, date)=>{
 }
 
 
+
+
+export const GetShowDetails = async (showId)=>{
+
+
+    try{
+
+        const response = await axiosInstance.get(`http://localhost:8000/shows/${showId}`);
+
+        console.log(response);
+
+        return response.data;
+
+    }catch(err){
+        console.log("error",err);
+        return err.response;
+    }
+
+}
