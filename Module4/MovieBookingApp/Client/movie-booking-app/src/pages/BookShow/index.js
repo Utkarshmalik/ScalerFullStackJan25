@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetShowDetails } from "../../api/shows";
 import Navbar from "../../components/Navbar";
-import { Card, Col, Row } from "antd";
+import { Button, Card, Col, Row } from "antd";
 import { all } from "axios";
 
 function BookShow(){
@@ -203,8 +203,9 @@ function BookShow(){
 
 
             </Row>
+            
 
-
+            <Button className="ms-3" variant="primary" > Create Booking </Button>
 
         </div> 
     }

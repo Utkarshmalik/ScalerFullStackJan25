@@ -3,8 +3,6 @@ const UserModel = require('../Model/user.model');
 
 const verifyJWT = (req,res,next)=>{
 
-    console.log(process.env);
-
     const token = req.headers['access-token'];
 
     if(!token){

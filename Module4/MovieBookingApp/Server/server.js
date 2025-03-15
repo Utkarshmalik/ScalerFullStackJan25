@@ -8,6 +8,7 @@ var cors = require('cors');
 const bodyParser = require("body-parser");
 const theatreRoutes = require("./src/Routes/theatre.routes");
 const showRoutes = require("./src/Routes/show.routes");
+const bookingRoutes = require("./src/Routes/booking.routes");
 require('dotenv').config()
 
 
@@ -24,6 +25,7 @@ userRoutes(app);
 movieRoutes(app);
 theatreRoutes(app);
 showRoutes(app);
+bookingRoutes(app);
 
 
 app.listen(8000,()=>{
