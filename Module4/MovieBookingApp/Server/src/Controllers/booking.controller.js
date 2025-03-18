@@ -2,17 +2,39 @@ const BookingsModel = require("../Model/booking.model");
 const showModel = require("../Model/show.model");
 const bookingConfirmationTemplate = require("../templates/bookingConfirmationTemplate");
 const sendEmail = require("../Utils/EmailUtility");
+const stripe = require('stripe')('sk_test_51R3pTx2XhG8Zyja1Fjl1lFHRQPKkF918SaD3umiIVLGiMpZD7SdScbayeg95j7A6BXpTrC1OijEaWkBeZ5aZX68X00xKGv9aXL');
 
 
-const makePayment = (req,res)=>{
+
+const makePayment = async (req,res)=>{
 
     const {token,amount} = req.body;
 
 
+    //create a new stripe customer 
+
+    const customer = await stripe.customers.create({
+        email:req.userDetails.email,
+        source:token
+    })
+
+
+    //create the payment intent
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        customer:customer.id,
+        amount:amount,
+        currency:'usd',
+        payment_method_types:['card']
+    });
+
+    
+    const transactionId = paymentIntent.id;
+
+
+
     console.log(`Perform Payment for amount ${amount} via stripe`);
-
-    let transactionId = Date.now().toString(36) + Math.random().toString(36);
-
+    
 
     return res.status(200).send({
         success:true,

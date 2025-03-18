@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetShowDetails } from "../../api/shows";
 import Navbar from "../../components/Navbar";
-import { Button, Card, Col, Row } from "antd";
+import { Button, Card, Col, message, Row } from "antd";
 import { all } from "axios";
+import StripeCheckout from 'react-stripe-checkout';
+import { createBooking, makePayment } from "../../api/bookings";
 
 function BookShow(){
 
@@ -12,6 +14,8 @@ function BookShow(){
 
     const [showDetails, setShowDetails] = useState(null);
     const [selectedSeats, setSelectedSeats] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(()=>{
         fetchShowData();
@@ -29,6 +33,42 @@ function BookShow(){
         }catch(err){
 
         }
+    }
+
+
+    const onToken = async (token)=>{
+        
+        console.log("Token generated ", token.id);
+
+        try{
+
+            const paymentsResponse = await makePayment({token:token.id,amount:selectedSeats.length * showDetails.ticketPrice});
+
+
+            if(paymentsResponse.success){
+
+                message.success(paymentsResponse.message);
+
+                const bookingResponse = await createBooking({show:showId,transactionId:paymentsResponse.data,seats:selectedSeats});
+
+                if(bookingResponse.success){
+                    message.success(bookingResponse.message);
+
+                    setTimeout(()=>{
+                        navigate("/");
+                    },1000)
+                }
+
+                
+
+            }
+
+        }catch(err){
+
+
+        }
+
+
     }
 
     const getSeats = ()=>{
@@ -203,9 +243,19 @@ function BookShow(){
 
 
             </Row>
-            
 
-            <Button className="ms-3" variant="primary" > Create Booking </Button>
+            {
+
+                selectedSeats.length >0 && 
+                <StripeCheckout 
+                className="ms-3"
+            token={onToken}
+            stripeKey="pk_test_51R3pTx2XhG8Zyja1v8IF4hAfqxkQzaMRAx7e9qgGerT89sUC6uDtGw0AGNQRGqNl0N51UYqzpyzn62VuyIluiDin00xHInuBQv"
+            
+        />
+
+            }
+
 
         </div> 
     }

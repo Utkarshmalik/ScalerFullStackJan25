@@ -1,0 +1,33 @@
+Stripe is a popular online payment processing platform that allows businesses to accept payments securely via credit cards, bank transfers, wallets, and more. Stripe provides an API for integrating payment systems into websites and mobile applications, and it handles a lot of the complexity of payments, such as compliance and security.
+
+
+Stripe API Keys 
+
+Stripe uses two types of API keys to interact with its system:
+
+a. Public Key (Publishable Key)
+
+What it is: This is a key that is safe to expose on the client-side (in the browser or mobile app).
+
+Purpose: It allows you to create and interact with Stripe Elements (like payment forms) and to securely handle sensitive card information.
+
+How it works: The public key is used to generate tokens that represent the payment method (e.g., credit card details). These tokens are then sent to your backend for further processing.
+
+Prefix: It begins with pk_ for "public key".
+
+Example: pk_test_51Pk5XWKp25HZoc30bcTmozGCabcS6KEKI7isIVopkB8TmzislgHqHIY3fzvxstSTY6bSN6LhQeW3z7oYpkc242Sd008g8PAKBI
+
+
+b. Secret Key
+
+
+What it is: This is a secret key that you should never expose on the client-side. It is used for secure server-side operations, such as charging the card, creating customer records, or managing subscriptions.
+
+Purpose: You use this key to interact with Stripe's backend services (such as creating payments, handling charges, refunds, etc.).
+
+How it works: The secret key should only be used in your server environment. Using it securely allows you to create, update, or cancel charges, create customers, and so on.
+
+
+Prefix: It begins with sk_ for "secret key".
+
+Example: sk_test_4eC39HqLyjWDarjtT1zdp7dc
