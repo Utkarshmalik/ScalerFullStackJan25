@@ -4,11 +4,7 @@ const bookingConfirmationTemplate = require("../templates/bookingConfirmationTem
 const sendEmail = require("../Utils/EmailUtility");
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-
-console.log(stripeSecretKey);
-
 const stripe = require('stripe')(stripeSecretKey);
-
 
 
 const makePayment = async (req,res)=>{

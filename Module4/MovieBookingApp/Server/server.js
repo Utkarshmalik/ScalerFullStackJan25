@@ -40,6 +40,6 @@ showRoutes(app);
 bookingRoutes(app);
 
 
-app.listen(8000,()=>{
-    console.log("Serving is running on port 8000");
+app.listen(process.env.PORT,()=>{
+    console.log(`Serving is running on port ${process.env.PORT}`);
 })
