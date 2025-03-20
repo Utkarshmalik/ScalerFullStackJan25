@@ -1,0 +1,113 @@
+Encryption is a reversible process that transforms data into an unreadable format using a key. Only with the corresponding decryption key can the original data be restored.
+
+Decryption is the process of converting the encrypted data back to its original form using a decryption key.
+
+
+fwfwewwwmfmwf => f(n, key) = weflwfmwkmf
+
+
+Hashing 
+
+Hashing is a one-way process that converts data into a fixed-length string of characters. It is designed to be irreversible. This is useful for storing passwords because even if the hash is exposed, the original password cannot be easily recovered.
+
+
+ 
+
+ wfkwmfmwfmfrwfwf => f(n) => cdwkmwkwc
+
+
+
+ Password  f(n) => HashedPassword 
+
+
+ Login (username, password)
+
+ passwordInput => f(n) => HashedPassword' 
+
+
+ HashedPassword === HashedPassword'
+
+ 
+
+
+  P => hashFunction => HP1 
+
+
+  qwerty123 
+
+      fixedrandomStringPrefixqwerty123fixedrandomStringSuffix   -> hashFunction 
+
+
+Salt:
+
+Salt is a random string added to the password before hashing to ensure that even if two users have the same password, their hashes will be different. It protects against precomputed attacks like rainbow tables.
+
+
+
+
+
+
+
+
+
+
+
+100 tickets in 1 second
+
+
+
+ColdPlay 
+
+100000 clients are trying to book a ticket  (Client making a call to a Server to book the ticket)
+
+1 Single Client (100000 calls in 1 Sec)
+999999
+
+DDos attacks
+
+
+Rate Limiting 
+
+
+
+A rate limiter is a mechanism used to control the number of requests a client can make to a server within a specific time frame. This helps to prevent abuse, ensure fair usage, and protect the server from being overwhelmed by too many requests in a short period. 
+
+
+
+
+ClientA : 10TPS 
+
+ClientB : 50TPS 
+
+
+default : 5 TPS 
+
+Throatling 
+
+
+
+
+
+
+
+SQL Injection
+
+username and password (client with send to a server in body)
+
+
+Select * from users Where username = '${username}' AND password = '${password}'`;
+
+
+username=utkarsh password= qwerty123
+
+Select * from users Where username = 'utkarsh' AND password = 'qwerty123';
+
+
+const userName = "admin' OR '1'='1";
+
+
+Select * from users Where username = 'admin' OR '1'='1' AND password = 'qwerty123';
+
+
+SQL Injection is a code injection technique that exploits a security vulnerability in an application's software by manipulating the SQL queries made to the database. It typically occurs when user input is improperly sanitized and then included in SQL queries, allowing attackers to execute arbitrary SQL commands.
+

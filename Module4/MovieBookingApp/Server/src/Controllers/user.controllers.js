@@ -1,6 +1,7 @@
 const UserModel = require("../Model/user.model");
 var jwt = require('jsonwebtoken');
 
+const bcrypt = require('bcrypt');
 
 
 const onRegister = async (req,res)=>{
@@ -13,11 +14,22 @@ const onRegister = async (req,res)=>{
 
     
     try{
+
+
+
+
         const existingUser = await UserModel.findOne({email:email});
 
         if(existingUser){
             return res.status(400).send({success:false, message:"User with this email already exists"});
         }
+
+        const salt = await bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+
+        req.body.password = hashedPassword;
+
 
         const newUser = new UserModel(req.body);
 
@@ -38,6 +50,10 @@ const onLogin = async (req,res)=>{
 
     const {email, password} = req.body;
 
+
+    console.log(email);
+    console.log(password);
+
     if(!email || !password){
         return res.status(400).send({success:false,message:"Either of Email/Password is missing!"});
     }
@@ -48,11 +64,16 @@ const onLogin = async (req,res)=>{
 
         
         if(!existingUser){
-            return res.status(404).send({success:false, message:`User with email ${email} doesnot exists`});
+            return res.status(404).send({success:false, message:`User with email and password doesnot exists`});
         }
+    
 
-        // Simplified password validation (assuming passwords are stored in plain text, which is not recommended)
-        if(password !== existingUser.password){
+        const hashedCorrectPassword = existingUser.password;
+
+        const isPasswordValid = bcrypt.compareSync(password, hashedCorrectPassword);
+
+
+        if(!isPasswordValid){
             return res.status(400)
             .send({success:false, message:`Sorry! Invalid Password entered!`});
         }
