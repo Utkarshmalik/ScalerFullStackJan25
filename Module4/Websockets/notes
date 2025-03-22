@@ -1,0 +1,88 @@
+
+HTTP/REST API APIs request response pattern
+
+Client sends a request
+Server responds
+Then connection is closed
+
+
+This works fine for static or on-demand data.
+
+
+What if the data changes frequently?
+
+What if you want to push updates to the client immediately?
+
+
+
+
+
+
+
+
+Utkarsh -> Milind (Hii)
+
+
+
+Client  -> Client 
+
+
+
+Polling is a technique used in computing where one system or component repeatedly checks (or "polls") another to see if a certain condition has been met or if new data is available.
+
+
+Client-Server Communication: A client might poll a server every 0.5 seconds to see if there's a new message.
+
+
+
+Cons 
+
+Inefficient if nothing changes often (wastes resources)
+Can introduce latency depending on the polling interval
+
+Polling every few seconds increases latency, bandwidth usage, and server load.
+
+
+
+
+1. What are WebSockets
+
+WebSockets  : BiDirectional Commuication 
+
+
+WebSocket is a full-duplex communication protocol that enables real-time, two-way interaction between client and server over a single TCP connection.
+
+Unlike HTTP:
+
+HTTP is request-response based (client initiates, server responds).
+
+WebSocket allows both client and server to send messages anytime, making it perfect for real-time applications.
+
+2. When to use WebSockets?
+
+Chat applications
+
+Online gaming
+
+Live notifications
+
+Collaborative editing (e.g., Google Docs)
+
+Real-time data streaming (e.g., stock prices, sports scores)
+
+
+3. How WebSocket Works
+
+Handshake – Client initiates a WebSocket connection via HTTP Upgrade request.
+
+Open Connection – If server supports WebSockets, the connection is upgraded.
+
+Communication – Both client and server can now send/receive messages in real time.
+
+Close – Either party can close the connection.
+
+
+
+io.on('connection', callback): Listens for when a new client connects to the WebSocket server.
+
+socket.on('chat message', callback): Listens for incoming chat message events from the client.

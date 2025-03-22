@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+     const socket = io(); // Initialize the socket connection
+
+
+     socket.on("chat-message",(msg)=>{
+        console.log(`Message Recieved from Server ${msg}`);
+        var li = document.createElement('li');
+        li.textContent = msg;
+
+        document.getElementById("messages").appendChild(li);
+
+     })
+
+
+
+
+
+
+
+
+     function sendMessage(){
+           //Send a message from a client to a server 
+           const msg = document.getElementById('message').value;
+           console.log(msg);
+
+        //    socket.emit("name of the event", "Data for palyoad");
+
+        socket.emit('chat-message',msg);
+
+     }
+
+
+    </script>
+
+</head>
+<body>
+
+    <h1> Websockets chat  </h1>
+
+    <ul id="messages"></ul>
+
+    <input type="text" id="message"  /> 
+    <button onclick="sendMessage()" > Send </button>
+    
+</body>
+</html>

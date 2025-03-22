@@ -7,7 +7,7 @@ export const GetShowsForAMovie = async (movieId, date)=>{
 
     try{
 
-        const response = await axiosInstance.get(`http://localhost:8000/shows/movies/${movieId}?date=${date}`);
+        const response = await axiosInstance.get(`https://bookmyshowbackendscalerjanbatch.onrender.com/shows/movies/${movieId}?date=${date}`);
 
         console.log(response);
 
@@ -28,7 +28,7 @@ export const GetShowDetails = async (showId)=>{
 
     try{
 
-        const response = await axiosInstance.get(`http://localhost:8000/shows/${showId}`);
+        const response = await axiosInstance.get(`https://bookmyshowbackendscalerjanbatch.onrender.com/shows/${showId}`);
 
         console.log(response);
 

@@ -7,7 +7,7 @@ export const makePayment = async ({token,amount})=>{
 
     try{
 
-        const response = await axiosInstance.post("http://localhost:8000/payments",{
+        const response = await axiosInstance.post("https://bookmyshowbackendscalerjanbatch.onrender.com/payments",{
             token,
             amount
         })
@@ -29,7 +29,7 @@ export const createBooking = async ({show,seats,transactionId})=>{
 
     try{
 
-        const response = await axiosInstance.post("http://localhost:8000/bookings",{
+        const response = await axiosInstance.post("https://bookmyshowbackendscalerjanbatch.onrender.com/bookings",{
             show,
             seats,
             transactionId

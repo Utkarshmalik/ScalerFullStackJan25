@@ -7,7 +7,7 @@ export const RegisterUser = async (data)=>{
 
     try{
 
-        const response = await axiosInstance.post("http://localhost:8000/register",data);
+        const response = await axiosInstance.post("https://bookmyshowbackendscalerjanbatch.onrender.com/register",data);
 
         console.log(response);
 
@@ -26,7 +26,7 @@ export const LoginUser = async (data)=>{
 
     try{
 
-        const response = await axiosInstance.post("http://localhost:8000/login",data);
+        const response = await axiosInstance.post("https://bookmyshowbackendscalerjanbatch.onrender.com/login",data);
 
         return response.data;
 

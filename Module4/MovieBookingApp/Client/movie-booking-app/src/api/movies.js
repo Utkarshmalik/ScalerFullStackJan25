@@ -7,7 +7,7 @@ export const GetAllMovies = async ()=>{
 
     try{
 
-        const response = await axiosInstance.get("http://localhost:8000/movies");
+        const response = await axiosInstance.get("https://bookmyshowbackendscalerjanbatch.onrender.com/movies");
 
         console.log(response);
 
@@ -27,7 +27,7 @@ export const GetMovieData = async (movieId)=>{
 
     try{
         
-        const response = await axiosInstance.get(`http://localhost:8000/movies/${movieId}`);
+        const response = await axiosInstance.get(`https://bookmyshowbackendscalerjanbatch.onrender.com/movies/${movieId}`);
 
         console.log(response);
 
