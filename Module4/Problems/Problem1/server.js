@@ -2,6 +2,7 @@
 
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 
 const app = express();
 
@@ -9,7 +10,8 @@ app.get("/downloadFullFile",(req,res)=>{
 
     //read the entire file
 
-    const filePath = '/Users/utmalik/Scaler/ScalerFullStackJan/Module4/Problems/Problem1/big.file';
+    // const filePath = '/Users/utmalik/Scaler/ScalerFullStackJan/Module4/Problems/Problem1/big.file';
+    const filePath = path.join(__dirname,'big.file');
 
     fs.readFile(filePath,(err,data)=>{
 
@@ -28,7 +30,8 @@ app.get("/downloadFullFile",(req,res)=>{
 
 app.get("/downloadFileWithStreams",(req,res)=>{
 
-    const filePath = '/Users/utmalik/Scaler/ScalerFullStackJan/Module4/Problems/Problem1/big.file';
+    const filePath = path.join(__dirname,'big.file');
+
 
     //Create a readable Stream for the big file
     const readableStream = fs.createReadStream(filePath);
@@ -43,17 +46,34 @@ app.get("/downloadFileWithStreams",(req,res)=>{
 
         writeableStream.write(chunk);
     })
-
-
-
-
-
-
-
-
-
-
 })
+
+
+// The pipe() function is a method on Readable streams and is used to connect a readable stream to a writable stream. It automatically handles the data transfer from the readable stream to the writable stream. To simplify your code using the pipe method, you can replace the manual read and write operations with a single pipe() call.
+
+
+
+app.get("/downloadFileWithStreamsV2",(req,res)=>{
+
+    const filePath = path.join(__dirname,'big.file');
+
+
+    const readableStream = fs.createReadStream(filePath);
+    const writeableStream = fs.createWriteStream("copyOfBigFileV3");
+
+    readableStream.pipe(writeableStream);
+
+    readableStream.on("error",(err)=>{
+        console.log("Error while reading", err);
+    })
+    
+    writeableStream.on("error",(err)=>{
+        console.log("Error while writing",err);
+    })
+
+ 
+})
+
 
 
 

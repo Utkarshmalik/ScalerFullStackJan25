@@ -1,0 +1,44 @@
+There can be certain tasks that are CPU-intensive like image processing, video encoding, etc.
+
+How do you handle them in NodeJS. 
+
+
+Fibonacii Series : 1000th fibonacaii 
+
+
+For I/O operations (like reading from a file or database),Node.js uses non-blocking, asynchronous calls, allowing the event loop to continue handling other tasks while waiting for the I/O operation to complete.
+
+
+CPU-bound tasks like Fibonacci computation don't yield control back to the event loop until they are fully completed
+
+This leads to a situation where the server becomes unresponsive or significantly slow in handling new requests.
+
+
+Child Processes in Node.js
+
+Child processes allow you to perform operations in separate processes, useful for CPU-intensive tasks or lower-level system interactions.
+
+
+
+
+
+Child Process 
+
+// Child Process: A child process is a separate instance of the Node.js runtime. It runs independently of the parent process and does not share memory with it. Communication between the parent and child processes happens through inter-process communication (IPC) mechanisms, such as messages or pipes.
+
+
+Thread 
+
+// Thread: A thread, on the other hand, is a smaller unit of execution within a process. Threads share the same memory space and can directly communicate with each other. Node.js is single-threaded by nature, meaning it has a single main event loop and handles tasks asynchronously using non-blocking I/O.
+
+
+
+
+
+In Node.js, Child Processes allow you to spawn other processes from your Node.js application. This is especially useful when you need to perform CPU-intensive tasks that may block the event loop, or when you need to run other programs alongside your Node.js application. By using child processes, you can execute commands, scripts, or programs as separate processes, which can run concurrently, allowing you to keep the main application responsive.
+
+
+spawn(): Launches a new process with a given command and arguments.
+fork(): A special case of spawn() used to create a new Node.js process, allowing for two-way communication between the parent and child.
+exec(): Executes a shell command and buffers the output, providing a callback with the result.
+
