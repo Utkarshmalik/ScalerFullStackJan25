@@ -104,6 +104,14 @@ const Login = () => {
                 </Link>
             </p>
 
+            <p>
+                Forget Password ?  
+                
+                <Link to="/forget" >
+                 Click here 
+                </Link>
+            </p>
+
             </section>
 
 

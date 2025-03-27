@@ -6,8 +6,8 @@ import { axiosInstance } from "./axiosInstance";
 export const makePayment = async ({token,amount})=>{
 
     try{
-
-        const response = await axiosInstance.post("https://bookmyshowbackendscalerjanbatch.onrender.com/payments",{
+       
+        const response = await axiosInstance.post("http://localhost:8000/payments",{
             token,
             amount
         })

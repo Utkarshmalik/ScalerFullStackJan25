@@ -11,6 +11,9 @@ const makePayment = async (req,res)=>{
 
     const {token,amount} = req.body;
 
+    console.log(token);
+    console.log(amount);
+
 
     //create a new stripe customer 
 

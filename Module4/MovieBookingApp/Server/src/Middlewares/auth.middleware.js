@@ -33,6 +33,9 @@ const verifyJWT = (req,res,next)=>{
 
 const verifyAdmin = (req,res,next)=>{
 
+
+    console.log(req.userDetails);
+
         const role = req.userDetails.role;
 
         if(role!="admin"){

@@ -1,4 +1,4 @@
-const { onRegister, onLogin, getAllUsers, getCurrentUser } = require("../Controllers/user.controllers");
+const { onRegister, onLogin, getAllUsers, getCurrentUser, onForgetPassword, onResetPassword } = require("../Controllers/user.controllers");
 
 
 module.exports = (app)=>{
@@ -7,6 +7,8 @@ module.exports = (app)=>{
     app.post("/login", onLogin);
     app.get("/users", getAllUsers);
     app.get("/users/current", getCurrentUser);
+    app.post("/forget",onForgetPassword);
+    app.post("/reset",onResetPassword);
 
 
 }

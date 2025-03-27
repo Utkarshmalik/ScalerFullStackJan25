@@ -38,3 +38,39 @@ export const LoginUser = async (data)=>{
 
 
 
+export const ForgetPasswordAPI = async (data)=>{
+
+    console.log("Make an API call with data ", data);
+
+    try{
+
+        const response = await axiosInstance.post("http://localhost:8000/forget",data);
+
+        return response.data;
+
+    }catch(err){
+        return err.response.data;
+    }
+
+}
+
+
+
+export const ResetPasswordAPI = async (data)=>{
+
+    console.log("Make an API call with data ", data);
+
+    try{
+
+        const response = await axiosInstance.post("http://localhost:8000/reset",data);
+
+        return response.data;
+
+    }catch(err){
+        return err.response.data;
+    }
+
+}
+
+
+

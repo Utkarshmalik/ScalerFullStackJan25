@@ -2,7 +2,9 @@ const UserModel = require("../Model/user.model");
 var jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcrypt');
-
+const { generateOTP } = require("../Utils/OTPGenerator");
+const otpGenerationTemplate = require("../templates/otpGenerationTemplate");
+const sendEmail = require("../Utils/EmailUtility");
 
 const onRegister = async (req,res)=>{
 
@@ -143,11 +145,120 @@ const getCurrentUser = async (req,res)=>{
 
 }
 
+const onForgetPassword = async (req,res)=>{
+
+    const {email} = req.body;
+
+    try{
+
+        let user = await UserModel.findOne({email:email});
+
+        if(user==null){
+            return res.status(404).send({
+                success:false,
+                message:`User with this email ${email} doesnot exists in our systems`
+            })
+        }
+
+        //generate an OTP 
+        const otp = generateOTP();
+
+
+        user.otp=otp;
+        user.otpExpiry = Date.now() + 2*60*1000;
+
+        await user.save();
+
+
+
+
+        const {subject,body} = otpGenerationTemplate(otp);
+        sendEmail([email],subject,body);
+
+
+        return res.status(200).send({
+            success:true,
+            message:`OTP sent successfully to email ${email}`
+        })
+
+
+
+    }catch(err){
+
+    }
+
+
+
+
+
+}
+
+const onResetPassword = async (req,res)=>{
+
+    const {otp,password} = req.body;
+
+    console.log(otp);
+    console.log(password);
+
+    try{
+
+        //validate OTP 
+        const user = await UserModel.findOne({otp:otp});
+
+        if(!user){
+            return res.status(400).send({
+                success:false,
+                message:"OTP is incorrect"
+            })
+        }
+
+
+        if(Date.now() > user.otpExpiry){
+            return res.status(400).send({
+                success:false,
+                message:"OTP has been expired"
+            })
+        }
+
+
+
+        //save new password 
+
+        const salt = await bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+        user.password = hashedPassword;
+        user.otp = null;
+        user.otpExpiry = null;
+
+        await user.save();
+
+
+
+        return res.status(200).send({
+            success:true,
+            message:"Password Reset Successfully"
+        })
+
+
+
+    }catch(err){
+
+    }
+
+
+}
+
+
 
 
 module.exports={
     onRegister,
     onLogin,
     getAllUsers,
-    getCurrentUser
+    getCurrentUser,
+    onForgetPassword,
+    onResetPassword
 }
+
+

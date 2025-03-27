@@ -1,0 +1,11 @@
+
+
+Web Application : Client -> Server -> Database 
+
+
+Node.js uses the “Single Threaded Event Loop” architecture to handle multiple concurrent clients.
+
+
+
+https://www.scaler.com/topics/nodejs/node-js-architecture/
+
